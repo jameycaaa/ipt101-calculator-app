@@ -4,91 +4,83 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculator Loria</title>
+  <title>📱 Calcu</title>
   <style>
     body {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
+      margin: 0;
       background: linear-gradient(to bottom right, #667eea, #764ba2);
-      /* Updated gradient colors */
     }
 
     #calculator {
-      width: 350px;
-      /* Increased width */
+      width: 90%;
+      max-width: 350px;
       border: none;
-      /* Removed border */
       padding: 20px;
       background: rgba(255, 255, 255, 0.8);
-      /* Semi-transparent background */
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 15px;
-      /* Increased gap */
       border-radius: 15px;
-      /* Increased border radius */
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-      /* Added shadow */
     }
 
     #calculator button,
     #calculator input {
       padding: 15px;
-      /* Increased padding */
       font-size: 18px;
-      /* Increased font size */
       border: none;
-      /* Removed borders */
       border-radius: 8px;
-      /* Rounded corners */
       background: #f8f9fa;
       color: #333;
       transition: background-color 0.3s, transform 0.2s;
-      /* Smooth transition for hover effects */
     }
 
     #calculator button:hover,
     #calculator button:focus {
       background-color: #e9ecef;
-      /* Change background on hover/focus */
       transform: translateY(-2px);
-      /* Slight lift effect */
     }
 
     #result {
       grid-column: span 4;
       text-align: right;
       background: #e9ecef;
-      /* Light grey background for the result input */
       font-weight: bold;
-      /* Bold font for better visibility */
     }
   </style>
 </head>
 
 <body>
+  <header style="font-family: Arial, sans-serif; color: #f0f0f0;">
+    <h1>📱 Calculator Application</h1>
+  </header>
   <div id="calculator">
     <input type="text" id="result" readonly>
-    <button onclick="appendNumber('1')">1</button>
-    <button onclick="appendNumber('2')">2</button>
-    <button onclick="appendNumber('3')">3</button>
-    <button onclick="operate('+')">+</button>
-    <button onclick="appendNumber('4')">4</button>
-    <button onclick="appendNumber('5')">5</button>
-    <button onclick="appendNumber('6')">6</button>
-    <button onclick="operate('-')">-</button>
+    <button onclick="operate('%')">%</button>
+    <button onclick="operate('/')">/</button>
+    <button onclick="clearResult()">C</button>
+    <button onclick="backspace()">DEL</button>
     <button onclick="appendNumber('7')">7</button>
     <button onclick="appendNumber('8')">8</button>
     <button onclick="appendNumber('9')">9</button>
     <button onclick="operate('*')">*</button>
+    <button onclick="appendNumber('4')">4</button>
+    <button onclick="appendNumber('5')">5</button>
+    <button onclick="appendNumber('6')">6</button>
+    <button onclick="operate('-')">-</button>
+    <button onclick="appendNumber('1')">1</button>
+    <button onclick="appendNumber('2')">2</button>
+    <button onclick="appendNumber('3')">3</button>
+    <button onclick="operate('+')">+</button>
+    <button onclick="calculateSquareRoot()">√</button>
     <button onclick="appendNumber('0')">0</button>
-    <button onclick="clearResult()">C</button>
-    <button onclick="calculateResult()">=</button>
-    <button onclick="operate('/')">/</button>
     <button onclick="appendDecimal()">.</button>
-    <button onclick="backspace()">DEL</button>
+    <button onclick="calculateResult()">=</button>
   </div>
 
   <script>
@@ -122,9 +114,18 @@
         case '/':
           result = parseFloat(previousNumber) / parseFloat(currentNumber);
           break;
+        case '%':
+          result = (parseFloat(previousNumber) / 100) * parseFloat(currentNumber);
+          break;
       }
       savedResult = result.toFixed(2);
       document.getElementById('result').value = savedResult;
+    }
+
+    function calculateSquareRoot() {
+      const currentNumber = document.getElementById('result').value;
+      const result = Math.sqrt(parseFloat(currentNumber));
+      document.getElementById('result').value = result.toFixed(2);
     }
 
     function clearResult() {
@@ -145,6 +146,7 @@
       }
     }
   </script>
+
 </body>
 
 </html>
